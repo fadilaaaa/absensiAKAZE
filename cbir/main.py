@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score
 from face_detect import detect, crop_image
 
 cv2_base_dir = os.path.dirname(os.path.abspath(cv2.__file__))
-haar_model = os.path.join(cv2_base_dir, 'data/haarcascade_frontalface_default.xml')
+haar_model = os.path.join(cv2_base_dir, 'haarcascade_frontalface_default.xml')
 faceCascade = cv2.CascadeClassifier(haar_model)
 
 def glcm(image, distance=1, colorBit=256, angle=0):
