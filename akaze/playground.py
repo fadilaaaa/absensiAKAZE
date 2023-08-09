@@ -1,8 +1,3 @@
-import pandas as pd
+from lib.database import get_attendances, save_data
 
-df = pd.read_csv('data/faceDB.csv')
-
-if df.loc[df['name'] == 'kairi', 'desc'].values[0] is None:
-    print("None")
-print(type(df.loc[df['name'] == 'kairi', 'desc'].values[0]))
-print(df.loc[df['name'] == 'kairi', 'desc'].values[0])
+print(get_attendances())
