@@ -63,6 +63,13 @@ def save_new_member(entryInput, window):
     if name == "":
         messagebox.showwarning("Warning", "Please enter a name")
     else:
+        filename = "kehadiran/attendance_{}.csv".format(date.today())
+        df = pd.read_csv(filename)
+        # df = df.append(pd.DataFrame(
+        #     {'time': None, 'name': name, 'attended': False}, index=[0]), ignore_index=True)
+        df = pd.concat([df, pd.DataFrame(
+            [{'time': None, 'name': name, 'attended': False}])], ignore_index=True)
+        df.to_csv(filename, index=False)
         save_data(name)
         set_attendance(reRender=True)
         window.destroy()
