@@ -16,6 +16,7 @@ import time
 cap = cv2.VideoCapture(0)
 attendances = []
 choords = []
+img = None
 desc = None
 start_time = None
 
@@ -140,9 +141,9 @@ def see_attendance(rootTK):
 def attendance(name):
     today = date.today()
     filename = "kehadiran/attendance_{}.csv".format(today)
-    df = pd.read_csv(filename, header=0)
+    df = pd.read_csv(filename)
 
-    if not df.loc[df['name'] == name, 'attended'].item():
+    if df[df['name'] == name]['attended'].values[0] == False:
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
 
@@ -162,6 +163,7 @@ def reset_attendance():
 def generate_image_from_camera(labelLiveCam, labelSnapshot, labelName):
     global choords
     global desc
+    global img
     # Get the latest frame and convert into Image
     cv2image = cv2.cvtColor(cap.read()[1], cv2.COLOR_BGR2RGB)
     img = cv2.flip(cv2image, 1)
@@ -181,6 +183,7 @@ def generate_image_from_camera(labelLiveCam, labelSnapshot, labelName):
             labelSnapshot.configure(image=imgtkSnap)
             imgGray = imgSnap.convert('L')
             desc = get_featureAKAZE(np.array(imgGray))
+            img = imgSnap
             if desc is not None:
                 name = who_is_this(desc)
                 labelName.config(text=name, font=("Arial", 12, "bold"))
@@ -241,7 +244,7 @@ def create_UI_interface():
                    'attendances': attendances})
 
     btnSave = Button(submitFormFrame, text="Snap and save",
-                     command=lambda: save_data(stringVar.get(), desc)
+                     command=lambda: save_data(stringVar.get(), desc, img)
                      )
     btnSave.grid(column=0, row=2, padx=6, sticky="nsew")
 

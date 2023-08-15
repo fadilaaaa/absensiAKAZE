@@ -33,7 +33,7 @@ while True:
                         {"matches": matches, "name": row['name']})
                 matches_max = max(list_of_good_matches,
                                   key=lambda d: d['matches'])
-                if matches_max['matches'] > 10:
+                if matches_max['matches'] > 20:
                     print(matches_max['name'])
                     break
                 else:
