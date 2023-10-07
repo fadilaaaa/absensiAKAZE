@@ -193,7 +193,7 @@ def generate_image_from_camera(labelLiveCam, labelSnapshot, labelName):
             img = imgSnap
             if desc is not None:
                 name = who_is_this(desc)
-                labelName.config(text=name, font=("Arial", 12, "bold"))
+
                 # labelName.update_idletasks()
 
                 if name != "Tidak dikenali":
@@ -201,11 +201,12 @@ def generate_image_from_camera(labelLiveCam, labelSnapshot, labelName):
                     if start_time == None:
                         start_time = time.time()
                     if time.time() - start_time > 5:
+                        labelName.config(text=name, font=("Arial", 12, "bold"))
                         attendance(name)
                         start_time = None
 
     # Repeat after an interval to capture continiously
-    labelLiveCam.after(200, lambda: generate_image_from_camera(
+    labelLiveCam.after(500, lambda: generate_image_from_camera(
         labelLiveCam, labelSnapshot, labelName))
 
 
